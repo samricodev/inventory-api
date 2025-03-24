@@ -1,17 +1,9 @@
 const express = require('express')
-const mongoose = require('mongoose')
+const connection = require('./db/connection')
 const app = express()
 const port = 3000
 
-mongoose.connect("mongodb://db:27017/inventory",
-  {
-      useNewUrlParser: true,
-      useUnifiedTopology: true
-
-  })
-  .then(() => console.log('MongoDB connected'))
-  .catch(err => console.log(err)
-);
+connection()
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
