@@ -1,0 +1,26 @@
+
+POST http://localhost:3000/autoparts HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "Antifreeze",
+  "price": 130,
+  "stock": 20,
+  "description": "Antifreeze for cars"
+}
+
+###
+
+PUT http://localhost:3000/autoparts/67e0a98daa462a267e153276 HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "Antifreeze",
+  "price": 130,
+  "stock": 20,
+  "description": "Antifreeze for cars x2"
+}
+
+###
+
+DELETE http://localhost:3000/autoparts/67e0a98daa462a267e153276 HTTP/1.1
