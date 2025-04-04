@@ -2,7 +2,8 @@ const Item = require('../models/item');
 
 const getItems = async (req, res) => {
   try {
-    const items = await Item.find();
+    const items = await Item.find().populate('category', 'name');
+    if (!items) return res.status(404).json({ message: 'Items not found' });
     res.json(items);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -11,7 +12,8 @@ const getItems = async (req, res) => {
 
 const getItem = async (req, res) => {
   try {
-    const item = await Item.findById(req.params.id);
+    const item = await Item.findById(req.params.id).populate('category', 'name');
+    if (!item) return res.status(404).json({ message: 'Item not found' });
     res.json(item);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -22,6 +24,7 @@ const createItem = async (req, res) => {
   const item = new Item(req.body);
   try {
     const newItem = await item.save();
+    await newItem.populate('category', 'name');
     res.status(201).json(newItem);
   } catch (error) {
     res.status(400).json({ message: error.message });

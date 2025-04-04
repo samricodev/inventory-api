@@ -1,6 +1,7 @@
 const express = require('express')
 const connection = require('./db/connection')
 const ItemRouter = require('./routes/item')
+const CategoryRouter = require('./routes/category')
 const app = express()
 const port = 3000
 
@@ -8,6 +9,7 @@ connection()
 
 app.use(express.json())
 app.use('/items', ItemRouter)
+app.use('/categories', CategoryRouter)
 
 app.get('/', (req, res) => {
   res.send('Hello World!')

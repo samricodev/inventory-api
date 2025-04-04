@@ -1,12 +1,22 @@
+POST http://localhost:3000/categories HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "Brakes",
+  "items": []
+}
+
+###
 
 POST http://localhost:3000/items HTTP/1.1
 Content-Type: application/json
 
 {
-  "name": "Break Fluid",
-  "price": 120,
-  "stock": 100,
-  "description": "Break fluid for cars"
+  "name": "WX50",
+  "category": "67ef5855002342b895ed781a",
+  "price": 500,
+  "stock": 4,
+  "description": "Brake pads for Nissan vehicles"
 }
 
 ###
@@ -23,4 +33,4 @@ Content-Type: application/json
 
 ###
 
-DELETE http://localhost:3000/items/67e0a98daa462a267e153276 HTTP/1.1
+DELETE http://localhost:3000/items/67ef42583a18fec27a8ba84e HTTP/1.1
