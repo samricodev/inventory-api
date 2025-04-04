@@ -1,13 +1,13 @@
 const express = require('express')
 const connection = require('./db/connection')
-const AutopartRouter = require('./routes/autopart')
+const ItemRouter = require('./routes/item')
 const app = express()
 const port = 3000
 
 connection()
 
 app.use(express.json())
-app.use('/autoparts', AutopartRouter)
+app.use('/items', ItemRouter)
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
