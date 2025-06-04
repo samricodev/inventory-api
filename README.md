@@ -122,5 +122,3 @@ El proyecto está dividido en dos carpetas principales: `frontend` y `backend`.
 Este proyecto está licenciado bajo la Licencia MIT - consulta el archivo [LICENSE](LICENSE) para más detalles.
 
 ---
-
-Este README proporciona una estructura básica que puedes expandir y personalizar según el alcance de tu proyecto. ¡Buena suerte con el desarrollo!
