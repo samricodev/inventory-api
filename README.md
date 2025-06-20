@@ -1,18 +1,11 @@
 
 ---
 
-# Proyecto de Inventario - Aplicación Web Full-Stack
+# Proyecto de Inventario - API
 
-Este proyecto es una aplicación web para gestionar inventarios. Permite a los usuarios agregar, editar, eliminar y consultar productos dentro de un sistema de inventario. Se implementa utilizando una arquitectura full-stack, donde el frontend interactúa con un backend que maneja la base de datos y la lógica de negocio.
+Este proyecto es una aplicación web para gestionar inventarios. Permite a los usuarios agregar, editar, eliminar y consultar productos dentro de un sistema de inventario. Se implementa utilizando un patrón de diseño MVC
 
 ## Tecnologías Usadas
-
-- **Frontend**: 
-  - HTML
-  - CSS
-  - JavaScript
-  - React.js (para la interfaz de usuario)
-  - Axios (para realizar peticiones HTTP al backend)
 
 - **Backend**:
   - Node.js
@@ -35,11 +28,6 @@ Este proyecto es una aplicación web para gestionar inventarios. Permite a los u
    - Autenticación basada en JWT.
    - Roles de usuarios para controlar el acceso (Administrador, Usuario normal).
 
-3. **Interfaz de Usuario**:
-   - Panel de control para gestionar el inventario.
-   - Formulario de adición y edición de productos.
-   - Listado dinámico de productos.
-
 ## Requisitos
 
 - **Node.js** y **npm** instalados.
@@ -58,17 +46,10 @@ Sigue estos pasos para instalar y ejecutar el proyecto en tu máquina local.
 
 2. **Instala las dependencias del Backend**:
    ```bash
-   cd backend
    npm install
    ```
 
-3. **Instala las dependencias del Frontend**:
-   ```bash
-   cd frontend
-   npm install
-   ```
-
-4. **Configura las variables de entorno**:
+3. **Configura las variables de entorno**:
    - Crea un archivo `.env` en el directorio `backend` y agrega las siguientes variables:
      ```
      MONGODB_URI=tu_conexion_a_mongodb
@@ -77,25 +58,13 @@ Sigue estos pasos para instalar y ejecutar el proyecto en tu máquina local.
      ```
    - Asegúrate de que MongoDB esté en ejecución o utiliza un servicio en la nube como MongoDB Atlas.
 
-5. **Ejecuta el Backend**:
+4. **Ejecuta el Backend**:
    ```bash
    cd backend
    npm start
    ```
 
-6. **Ejecuta el Frontend**:
-   ```bash
-   cd frontend
-   npm start
-   ```
-
-   Esto abrirá la aplicación en el navegador en `http://localhost:3000`.
-
 ## Estructura del Proyecto
-
-El proyecto está dividido en dos carpetas principales: `frontend` y `backend`.
-
-- **frontend/**: Contiene todos los archivos relacionados con el frontend de la aplicación (React).
 - **backend/**: Contiene la API y la lógica de backend (Node.js + Express.js).
 
 ## Endpoints del Backend
