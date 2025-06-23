@@ -2,7 +2,7 @@ POST http://localhost:3080/categories HTTP/1.1
 Content-Type: application/json
 
 {
-  "name": "Brakes",
+  "name": "Antifreeze",
   "items": []
 }
 
@@ -12,11 +12,11 @@ POST http://localhost:3080/items HTTP/1.1
 Content-Type: application/json
 
 {
-  "name": "WX50",
-  "category": "685995bf672f86acb680a5b4",
-  "price": 500,
-  "stock": 4,
-  "description": "Brake pads for Ford vehicles"
+  "name": "Preston 50% Antifreeze",
+  "category": "68599bb3bba5e2f67c28f1e1",
+  "price": 300,
+  "stock": 12,
+  "description": "Antifreeze for cars with 50% water"
 }
 
 ###
