@@ -1,34 +1,5 @@
-const redis = require('redis')
-const express = require('express')
-const ItemRouter = require('./routes/item')
-const connection = require('./db/connection')
-const responseTime = require('response-time')
-const CategoryRouter = require('./routes/category')
+const config = require('config');
+const app = require('./app');
+const server = require('./server');
 
-const app = express()
-const PORT = process.env.PORT || 3080
-
-connection()
-
-app.use(responseTime());
-
-const redisClient = redis.createClient({
-  url: "redis://cache:6379",  // 
-});
-
-redisClient.on('error', err => console.log('Redis Client Error', err));
-
-app.use(express.json())
-app.use('/items', ItemRouter)
-app.use('/categories', CategoryRouter)
-
-app.get('/ping', (req, res) => {
-  res.send('pong')
-})
-
-redisClient.connect().then(() => {
-  console.log("Redis connected")
-  app.listen(PORT, () => {
-    console.log(` 😀 server on port ${PORT}  `);
-  });
-});
+server.start(app, config.get('server.port'));
