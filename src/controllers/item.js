@@ -1,4 +1,5 @@
 const Item = require('../models/item');
+const Category = require('../models/category');
 
 const getItems = async (req, res) => {
   try {
@@ -22,9 +23,19 @@ const getItem = async (req, res) => {
 
 const createItem = async (req, res) => {
   const item = new Item(req.body);
+  const { category } = req.body;
+
   try {
     const newItem = await item.save();
     await newItem.populate('category', 'name');
+
+    if (category && category.length > 0) {
+      await Category.updateMany(
+        { _id: { $in: category } },
+        { $push: { items: newItem._id } }
+      );
+    }
+
     res.status(201).json(newItem);
   } catch (error) {
     res.status(400).json({ message: error.message });

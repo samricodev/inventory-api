@@ -4,7 +4,7 @@ services:
       context: .
       dockerfile: Dockerfile.dev
     volumes:
-      - ./:/usr/src/inventory-api
+      - .:/app
     ports:
       - '3080:3080'
     depends_on:
@@ -14,7 +14,7 @@ services:
     ports:
       - '27017:27017'
     volumes:
-      - mongodb_data: /data/db
+      - mongodb_data:/data/db
   cache:
     image: redis:latest
     ports:
@@ -23,4 +23,4 @@ services:
       - cache:/data
 volumes:
   cache:
-  db:
+  mongodb_data:

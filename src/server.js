@@ -5,5 +5,5 @@ function start(application, port = 3080) {
 }
 
 module.exports = {
-    start
+  start
 };
