@@ -1,4 +1,4 @@
-POST http://localhost:3000/categories HTTP/1.1
+POST http://localhost:3080/categories HTTP/1.1
 Content-Type: application/json
 
 {
@@ -8,12 +8,12 @@ Content-Type: application/json
 
 ###
 
-POST http://localhost:3000/items HTTP/1.1
+POST http://localhost:3080/items HTTP/1.1
 Content-Type: application/json
 
 {
   "name": "WX50",
-  "category": "67ef5855002342b895ed781a",
+  "category": "6859738fdb6e22dfba2d5b33",
   "price": 500,
   "stock": 4,
   "description": "Brake pads for Nissan vehicles"
@@ -21,7 +21,7 @@ Content-Type: application/json
 
 ###
 
-PUT http://localhost:3000/items/67e0a98daa462a267e153276 HTTP/1.1
+PUT http://localhost:3080/items/67e0a98daa462a267e153276 HTTP/1.1
 Content-Type: application/json
 
 {
@@ -33,4 +33,4 @@ Content-Type: application/json
 
 ###
 
-DELETE http://localhost:3000/items/67ef42583a18fec27a8ba84e HTTP/1.1
+DELETE http://localhost:3080/items/67ef42583a18fec27a8ba84e HTTP/1.1

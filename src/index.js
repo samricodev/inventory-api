@@ -1,4 +1,3 @@
-const axios = require('axios')
 const redis = require('redis')
 const express = require('express')
 const ItemRouter = require('./routes/item')
@@ -7,7 +6,9 @@ const responseTime = require('response-time')
 const CategoryRouter = require('./routes/category')
 
 const app = express()
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 3080
+
+connection()
 
 app.use(responseTime());
 

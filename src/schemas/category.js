@@ -9,7 +9,7 @@ const CategorySchema = new moongose.Schema({
     {
       type: moongose.Schema.Types.ObjectId,
       ref: 'Item',
-    },
+    }
   ],
 });
 
