@@ -1,16 +1,16 @@
-const moongose = require('mongoose');
+const mongoose = require('mongoose');
 
-const CategorySchema = new moongose.Schema({
+const CategorySchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
   },
   items: [
     {
-      type: moongose.Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: 'Item',
     }
   ],
 });
 
-module.exports = moongose.model('Category', CategorySchema);
+module.exports = mongoose.model('Category', CategorySchema);

@@ -5,9 +5,7 @@ const cors = require('cors');
 const config = require('config');
 
 const connection = require('./db/connection');
-
-const ItemRouter = require('./routes/item');
-const CategoryRouter = require('./routes/category');
+const router = require('./routes/router');
 
 const app = express();
 
@@ -17,8 +15,7 @@ app.use(morgan('dev'));
 app.use(helmet());
 app.use(cors(config.get('cors')));
 app.use(express.json());
-app.use('/items', ItemRouter);
-app.use('/categories', CategoryRouter);
+app.use('/', router);
 
 app.get('/ping', (req, res) => {
   console.log('Ping received');

@@ -1,6 +1,6 @@
-const moongose = require('mongoose');
+const mongoose = require('mongoose');
 const { CategorySchema } = require('../schemas/category');
 
-const Category = moongose.model('Category', CategorySchema);
+const Category = mongoose.model('Category', CategorySchema);
 
 module.exports = Category;
