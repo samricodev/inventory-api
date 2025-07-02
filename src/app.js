@@ -15,8 +15,8 @@ app.use(morgan('dev'));
 app.use(helmet());
 app.use(cors(config.get('cors')));
 app.use(express.json());
-app.use('/', router);
 
+app.use('/', router);
 app.get('/ping', (req, res) => {
   console.log('Ping received');
   res.send('pong');
