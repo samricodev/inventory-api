@@ -29,7 +29,6 @@ const createItem = async (req, res) => {
 
   try {
     const newItem = await item.save();
-    await newItem.populate('category', 'name');
 
     if (category && category.length > 0) {
       await Category.updateMany(
