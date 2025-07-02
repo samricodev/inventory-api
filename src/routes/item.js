@@ -1,17 +1,11 @@
-const { 
-    getItem,
-    getItems,
-    createItem,
-    updateItem,
-    deleteItem
-} = require('../controllers/item');
-
+const itemController = require('../controllers/item');
+const registerItemValidation = require('../middlewares/registerItemValidation');
 const ItemRouter = require('express').Router();
 
-ItemRouter.get('/', getItems);
-ItemRouter.get('/:id', getItem);
-ItemRouter.post('/', createItem);
-ItemRouter.put('/:id', updateItem);
-ItemRouter.delete('/:id', deleteItem);
+ItemRouter.get('/', itemController.getItems);
+ItemRouter.get('/:id', itemController.getItem);
+ItemRouter.post('/', [ registerItemValidation, itemController.createItem ]);
+ItemRouter.put('/:id',[ registerItemValidation, itemController.updateItem ]);
+ItemRouter.delete('/:id', itemController.deleteItem);
 
 module.exports = ItemRouter;
