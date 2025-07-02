@@ -1,11 +1,11 @@
 const Item = require('../models/item');
 const Category = require('../models/category');
 const Brand = require('../models/brand');
-const brand = require('../schemas/brand');
+const Location = require('../models/location');
 
 const getItems = async (req, res) => {
   try {
-    const items = await Item.find().populate('category', 'name').populate('brand', 'name');
+    const items = await Item.find().populate('category', 'name').populate('brand', 'name').populate('location', 'name');
     if (!items) return res.status(404).json({ message: 'Items not found' });
     res.json(items);
   } catch (error) {
@@ -15,7 +15,7 @@ const getItems = async (req, res) => {
 
 const getItem = async (req, res) => {
   try {
-    const item = await Item.findById(req.params.id).populate('category', 'name').populate('brand', 'name');
+    const item = await Item.findById(req.params.id).populate('category', 'name').populate('brand', 'name').populate('location', 'name');
     if (!item) return res.status(404).json({ message: 'Item not found' });
     res.json(item);
   } catch (error) {
@@ -25,8 +25,8 @@ const getItem = async (req, res) => {
 
 const createItem = async (req, res) => {
   const item = new Item(req.body);
-  const { category, brand } = req.body;
-
+  const { category, brand, location } = req.body;
+  
   try {
     const newItem = await item.save();
 
@@ -40,6 +40,13 @@ const createItem = async (req, res) => {
     if (brand && brand.length > 0) {
       await Brand.updateMany(
         { _id: { $in: brand } },
+        { $push: { items: newItem._id } }
+      );
+    }
+
+    if (location && location.length > 0) {
+      await Location.updateMany(
+        { _id: { $in: location } },
         { $push: { items: newItem._id } }
       );
     }
