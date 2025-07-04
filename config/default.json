@@ -5,7 +5,7 @@
   },
   "redisurl": "redis://localhost:6379",
   "mongodb": {
-    "url": "mongodb://localhost:27017/inventory",
+    "url": "mongodb://inventory-db:27017/inventory",
     "options": {
       "useNewUrlParser": true,
       "useUnifiedTopology": true,
