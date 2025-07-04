@@ -12,12 +12,10 @@ const ItemSchema = new mongoose.Schema({
   brand: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Brand',
-    required: true,
   },
   location: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Location',
-    required: true,
   },
   price: {
     type: Number,
