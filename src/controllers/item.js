@@ -30,23 +30,23 @@ const createItem = async (req, res) => {
   try {
     const newItem = await item.save();
 
-    if (category && category.length > 0) {
-      await Category.updateMany(
-        { _id: { $in: category } },
+    if (category) {
+      await Category.findByIdAndUpdate(
+        category,
         { $push: { items: newItem._id } }
       );
     }
 
-    if (brand && brand.length > 0) {
-      await Brand.updateMany(
-        { _id: { $in: brand } },
+    if (brand) {
+      await Brand.findByIdAndUpdate(
+        brand,
         { $push: { items: newItem._id } }
       );
     }
 
-    if (location && location.length > 0) {
-      await Location.updateMany(
-        { _id: { $in: location } },
+    if (location) {
+      await Location.findByIdAndUpdate(
+        location,
         { $push: { items: newItem._id } }
       );
     }
