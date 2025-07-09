@@ -2,24 +2,25 @@ const Item = require('../models/item');
 const Category = require('../models/category');
 const Brand = require('../models/brand');
 const Location = require('../models/location');
+const response = require('../utils/response');
 
 const getItems = async (req, res) => {
   try {
     const items = await Item.find().populate('category', 'name').populate('brand', 'name').populate('location', 'name');
-    if (!items) return res.status(404).json({ message: 'Items not found' });
-    res.json(items);
+    if (!items) return res.status(404).json(response.error(404, 'Items not found'));
+    res.status(200).json(response.success(200, 'Items information obtained successfully', items));
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json(response.error(500, error.message));
   }
 };
 
 const getItem = async (req, res) => {
   try {
     const item = await Item.findById(req.params.id).populate('category', 'name').populate('brand', 'name').populate('location', 'name');
-    if (!item) return res.status(404).json({ message: 'Item not found' });
-    res.json(item);
+    if (!item) return res.status(404).json(response.error(404, 'Item not found'));
+    res.status(200).json(response.success(200, 'Item information obtained successfully',item));
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json(response.error(500, error.message));
   }
 };
 
@@ -51,28 +52,28 @@ const createItem = async (req, res) => {
       );
     }
 
-    res.status(201).json(newItem);
+    res.status(201).json(response.success(201, 'Item registered', newItem));
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(500).json(response.error(500, error.message));
   }
 };
 
 const updateItem = async (req, res) => {
   try {
     const item = await Item.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    res.json(item);
+    res.status(200).json(response.success(200, 'Item updated', item));
   }
   catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(500).json(response.error(500, error.message));
   } 
 }
 
 const deleteItem = async (req, res) => {
   try {
     const item = await Item.findByIdAndDelete(req.params.id);
-    res.json(item);
+    res.status(200).json(response.success(200, 'Item deleted', item));
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json(response.error(500, error.message));
   }
 }
 

@@ -1,17 +1,17 @@
-const {
-  getLocations,
-  getLocation,
-  createLocation,
-  updateLocation,
-  deleteLocation
-} = require('../controllers/location');
+const locationController = require('../controllers/location');
 const registerLocationValidation = require('../middlewares/registerLocationValidation');
 const LocationRouter = require('express').Router();
 
-LocationRouter.get('/', getLocations);
-LocationRouter.get('/:id', getLocation);
-LocationRouter.post('/', [ registerLocationValidation, createLocation ]);
-LocationRouter.put('/:id', [ registerLocationValidation, updateLocation ]);
-LocationRouter.delete('/:id', deleteLocation);
+LocationRouter.get('/', locationController.getLocations);
+LocationRouter.get('/:id', locationController.getLocation);
+LocationRouter.post('/', [ 
+  registerLocationValidation, 
+  locationController.createLocation 
+]);
+LocationRouter.put('/:id', [ 
+  registerLocationValidation, 
+  locationController.updateLocation 
+]);
+LocationRouter.delete('/:id', locationController.deleteLocation);
 
 module.exports = LocationRouter;

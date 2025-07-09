@@ -18,7 +18,7 @@ describe('Register Location, Brand, Category and Item', () => {
         items: [],
       }),
     });
-    const data = await response.json();
+    const { data } = await response.json();
     expect(response.status).toBe(201);
     expect(data.name).toBe('Ubicación secundaria');
     idLocation = data._id;
@@ -36,7 +36,7 @@ describe('Register Location, Brand, Category and Item', () => {
         items: [],
       }),
     });
-    const data = await response.json();
+    const { data } = await response.json();
     expect(response.status).toBe(201);
     expect(data.name).toBe('Mobil');
     idBrand = data._id;
@@ -53,7 +53,7 @@ describe('Register Location, Brand, Category and Item', () => {
         items: [],
       }),
     });
-    const data = await response.json();
+    const { data } = await response.json();
     expect(response.status).toBe(201);
     expect(data.name).toBe('Aceite sintético');
     idCategory = data._id;
@@ -75,7 +75,7 @@ describe('Register Location, Brand, Category and Item', () => {
         description: 'Aceite sintético de alta calidad',
       }),
     });
-    const data = await response.json();
+    const { data } = await response.json();
     expect(response.status).toBe(201);
     expect(data.name).toBe('Aceite sintético 10W30');
   });

@@ -1,17 +1,17 @@
-const {
-  getBrands,
-  getBrand,
-  createBrand,
-  updateBrand,
-  deleteBrand
-} = require('../controllers/brand');
+const brandController = require('../controllers/brand');
 const registerBrandValidation = require('../middlewares/registerBrandValidation');
 const BrandRouter = require('express').Router();
 
-BrandRouter.get('/', getBrands);
-BrandRouter.get('/:id', getBrand);
-BrandRouter.post('/', [ registerBrandValidation, createBrand ]);
-BrandRouter.put('/:id', [ registerBrandValidation, updateBrand ]);
-BrandRouter.delete('/:id', deleteBrand);
+BrandRouter.get('/', brandController.getBrands);
+BrandRouter.get('/:id', brandController.getBrand);
+BrandRouter.post('/', [ 
+  registerBrandValidation, 
+  brandController.createBrand
+]);
+BrandRouter.put('/:id', [ 
+  registerBrandValidation, 
+  brandController.updateBrand 
+]);
+BrandRouter.delete('/:id', brandController.deleteBrand);
 
 module.exports = BrandRouter;
