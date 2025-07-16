@@ -4,8 +4,8 @@ const response = require('../utils/response');
 const getCategories = async (req, res) => {
   try {
     const categories = await Category.find().populate('items');
-    if (!categories) return res.status(404).json(response.error(404, 'No categories found'));
-    res.status(200).json(response.success(200, 'Categories information obtained successfully', categories));
+    if (!categories) return res.status(404).json(response.error(404, res.translate('No categories found')));
+    res.status(200).json(response.success(200, res.translate('Categories information obtained successfully', categories)));
   } catch (error) {
     res.status(500).json(response.error(500, error.message));
   }
@@ -14,8 +14,8 @@ const getCategories = async (req, res) => {
 const getCategory = async (req, res) => {
   try {
     const category = await Category.findById(req.params.id).populate('items');
-    if (!category) return res.status(404).json(response.error(404, 'Category not found'));
-    res.status(200).json(response.success(200, 'Category information obtained successfully', category));
+    if (!category) return res.status(404).json(response.error(404, res.translate('Category not found')));
+    res.status(200).json(response.success(200, res.translate('Category information obtained successfully', category)));
   } catch (error) {
     res.status(500).json(response.error(500, error.message));
   }
@@ -29,7 +29,7 @@ const createCategory = async (req, res) => {
 
   try {
     const newCategory = await category.save();
-    res.status(201).json(response.success(201, 'Category registered', newCategory));
+    res.status(201).json(response.success(201, res.translate('Category registered', newCategory)));
   } catch (error) {
     res.status(400).json(response.error(400, error.message));
   }
@@ -45,7 +45,7 @@ const updateCategory = async (req, res) => {
       category.description = req.body.description;
     }
     const updatedCategory = await category.save();
-    res.status(200).json(response.success(200, 'Category updated', updatedCategory));
+    res.status(200).json(response.success(200, res.translate('Category updated', updatedCategory)));
   } catch (error) {
     res.status(500).json(response.error(500, error.message));
   }
@@ -54,7 +54,7 @@ const updateCategory = async (req, res) => {
 const deleteCategory = async (req, res) => {
   try {
     const category = await Category.findByIdAndDelete(req.params.id);
-    res.json(response.success(200, 'Category deleted', category));
+    res.json(response.success(200, res.translate('Category deleted', category)));
   } catch (error) {
     res.status(500).json(response.error(500, error.message));
   }
