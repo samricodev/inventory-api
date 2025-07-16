@@ -7,8 +7,8 @@ const response = require('../utils/response');
 const getItems = async (req, res) => {
   try {
     const items = await Item.find().populate('category', 'name').populate('brand', 'name').populate('location', 'name');
-    if (!items) return res.status(404).json(response.error(404, 'Items not found'));
-    res.status(200).json(response.success(200, 'Items information obtained successfully', items));
+    if (!items) return res.status(404).json(response.error(404, res.translate('Items not found')));
+    res.status(200).json(response.success(200, res.translate('Items information obtained successfully', items)));
   } catch (error) {
     res.status(500).json(response.error(500, error.message));
   }
@@ -17,8 +17,8 @@ const getItems = async (req, res) => {
 const getItem = async (req, res) => {
   try {
     const item = await Item.findById(req.params.id).populate('category', 'name').populate('brand', 'name').populate('location', 'name');
-    if (!item) return res.status(404).json(response.error(404, 'Item not found'));
-    res.status(200).json(response.success(200, 'Item information obtained successfully',item));
+    if (!item) return res.status(404).json(response.error(404, res.translate('Item not found')));
+    res.status(200).json(response.success(200, res.translate('Item information obtained successfully',item)));
   } catch (error) {
     res.status(500).json(response.error(500, error.message));
   }
@@ -52,7 +52,7 @@ const createItem = async (req, res) => {
       );
     }
 
-    res.status(201).json(response.success(201, 'Item registered', newItem));
+    res.status(201).json(response.success(201, res.translate('Item registered', newItem)));
   } catch (error) {
     res.status(500).json(response.error(500, error.message));
   }
@@ -61,7 +61,7 @@ const createItem = async (req, res) => {
 const updateItem = async (req, res) => {
   try {
     const item = await Item.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    res.status(200).json(response.success(200, 'Item updated', item));
+    res.status(200).json(response.success(200, res.translate('Item updated', item)));
   }
   catch (error) {
     res.status(500).json(response.error(500, error.message));
@@ -71,7 +71,7 @@ const updateItem = async (req, res) => {
 const deleteItem = async (req, res) => {
   try {
     const item = await Item.findByIdAndDelete(req.params.id);
-    res.status(200).json(response.success(200, 'Item deleted', item));
+    res.status(200).json(response.success(200, res.translate('Item deleted', item)));
   } catch (error) {
     res.status(500).json(response.error(500, error.message));
   }
