@@ -1,11 +1,11 @@
 {
-  "No brands found": "No brands found" ,
-  "Brands information obtained successfully": "Brands information obtained successfully" ,
-  "Brand not found": "Brand not found" ,
-  "Brand information obtained successfully": "Brand information obtained successfully" ,
-  "Brand registered": "Brand registered" ,
-  "Brand updated": "Brand updated" ,
-  "Brand deleted": "Brand deleted" ,
+  "No brands found": "No brands found",
+  "Brands information obtained successfully": "Brands information obtained successfully",
+  "Brand not found": "Brand not found",
+  "Brand information obtained successfully": "Brand information obtained successfully",
+  "Brand registered": "Brand registered",
+  "Brand updated": "Brand updated",
+  "Brand deleted": "Brand deleted",
   "No categories found": "No categories found",
   "Categories information obtained successfully": "Categories information obtained successfully",
   "Category not found": "Category not found",
@@ -26,5 +26,13 @@
   "Location information obtained successfully": "Location information obtained successfully",
   "Location registered": "Location registered",
   "Location updated": "Location updated",
-  "Location deleted": "Location deleted"
+  "Location deleted": "Location deleted",
+  "Name is required and must be a valid string.": "Name is required and must be a valid string.",
+  "Address is required and must be a valid string.": "Address is required and must be a valid string.",
+  "State is required and must be a valid string.": "State is required and must be a valid string.",
+  "City is required and must be a valid string.": "City is required and must be a valid string.",
+  "Description is required and must be a valid string.": "Description is required and must be a valid string.",
+  "Price is required and must be a positive number.": "Price is required and must be a positive number.",
+  "Stock is required and must be a non-negative number.": "Stock is required and must be a non-negative number.",
+  "Description must be a valid string if provided.": "Description must be a valid string if provided."
 }
