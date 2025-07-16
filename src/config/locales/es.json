@@ -26,5 +26,13 @@
   "Location information obtained successfully": "Información de la ubicación obtenida con éxito",
   "Location registered": "Ubicación registrada",
   "Location updated": "Ubicación actualizada",
-  "Location deleted": "Ubicación eliminada"
+  "Location deleted": "Ubicación eliminada",
+  "Name is required and must be a valid string.": "El nombre es requerido y debe de ser un string válido",
+  "Address is required and must be a valid string.": "La dirección es requerida y debe de ser un string válido",
+  "State is required and must be a valid string.": "El estado es requerido y debe de ser un string válido",
+  "City is required and must be a valid string.": "La ciudad es requerida y debe de ser un string válido",
+  "Description is required and must be a valid string.": "La descripción es requerida y debe ser un string válido",
+  "Price is required and must be a positive number.": "El precio es requerido y debe de ser un número positivo",
+  "Stock is required and must be a non-negative number.": "El stock es requerido y debe de ser un número no negativo",
+  "Description must be a valid string if provided.": "La descripción debe de ser un string válido si es que lo proveen"
 }
