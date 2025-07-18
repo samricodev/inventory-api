@@ -42,7 +42,7 @@ const createLocation = async (req, res) => {
 
 const updateLocation = async (req, res) => {
   try {
-    const location = await Location.findByIdAndDelete({
+    const location = await Location.findByIdAndUpdate({
       _id: req.params.id,
       userId: req.user.id
     });
