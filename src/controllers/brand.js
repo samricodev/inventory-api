@@ -3,8 +3,10 @@ const response = require('../utils/response');
 
 const getBrands = async (req, res) => {
   try {
-    const brands = await Brand.find().populate('items');
-    if (!brands) return res.status(404).json(response.error(404, res.translate('No brands found')));
+    const brands = await Brand.find({ userId: req.user._id }).populate('items');
+    if (!brands.length) {
+      return res.status(404).json(response.error(404, res.translate('No brands found')));
+    }
     res.status(200).json(response.success(200, res.translate('Brands information obtained successfully'), brands));
   } catch (error) {
     res.status(500).json(response.error(500, error.message));
@@ -13,7 +15,10 @@ const getBrands = async (req, res) => {
 
 const getBrand = async (req, res) => {
   try {
-    const brand = await Brand.findById(req.params.id).populate('items');
+    const brand = await Brand.findOne({
+      _id: req.params.id,
+      userId: req.user._id
+    }).populate('items');
     if (!brand) return res.status(404).json(response.error(404, res.translate('Brand not found')));
     res.status(200).json(response.success(200, res.translate('Brand information obtained successfully'), brand));
   } catch (error) {
@@ -23,7 +28,10 @@ const getBrand = async (req, res) => {
 
 const createBrand = async (req, res) => {
   try {
-    const brand = new Brand(req.body);
+    const brand = new Brand({
+      ...req.body,
+      userId: req.user._id,
+    });
     await brand.save();
     res.status(201).json(response.success(201, res.translate('Brand registered'), brand));
   } catch (error) {
@@ -33,7 +41,11 @@ const createBrand = async (req, res) => {
 
 const updateBrand = async (req, res) => {
   try {
-    const brand = await Brand.findByIdAndUpdate(req.params.id, req.body);
+    const brand = await Brand.findOneAndUpdate(
+      { _id: req.params.id, userId: req.user._id },
+      req.body,
+      { new: true }
+    );
     if (!brand) return res.status(404).json(response.error(404, res.translate('Brand not found')));
     res.status(200).json(response.success(200, res.translate('Brand updated'), brand));
   } catch (error) {
@@ -43,7 +55,10 @@ const updateBrand = async (req, res) => {
 
 const deleteBrand = async (req, res) => {
   try {
-    const brand = await Brand.findByIdAndDelete(req.params.id);
+    const brand = await Brand.findOneAndDelete({
+      _id: req.params.id,
+      userId: req.user._id
+    });
     if (!brand) return res.status(404).json(response.error(404, res.translate('Brand not found')));
     res.json(response.success(200, res.translate('Brand deleted'), brand));
   } catch (error) {
