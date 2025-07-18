@@ -18,10 +18,10 @@ describe('Register Location, Brand, Category and Item', () => {
         items: [],
       }),
     });
-    const { data } = await response.json();
+    const responseData = await response.json();
     expect(response.status).toBe(201);
-    expect(data.name).toBe('Ubicación secundaria');
-    idLocation = data._id;
+    expect(responseData.data.name).toBe('Ubicación secundaria');
+    idLocation = responseData.data._id;
   });
 
   it('should register a new brand', async () => {
@@ -36,10 +36,10 @@ describe('Register Location, Brand, Category and Item', () => {
         items: [],
       }),
     });
-    const { data } = await response.json();
+    const responseData = await response.json();
     expect(response.status).toBe(201);
-    expect(data.name).toBe('Mobil');
-    idBrand = data._id;
+    expect(responseData.data.name).toBe('Mobil');
+    idBrand = responseData.data._id;
   });
 
   it('should register a new category', async () => {
@@ -53,10 +53,10 @@ describe('Register Location, Brand, Category and Item', () => {
         items: [],
       }),
     });
-    const { data } = await response.json();
+    const responseData = await response.json();
     expect(response.status).toBe(201);
-    expect(data.name).toBe('Aceite sintético');
-    idCategory = data._id;
+    expect(responseData.data.name).toBe('Aceite sintético');
+    idCategory = responseData.data._id;
   });
 
   it('should register a new item in the category', async () => {
@@ -75,8 +75,8 @@ describe('Register Location, Brand, Category and Item', () => {
         description: 'Aceite sintético de alta calidad',
       }),
     });
-    const { data } = await response.json();
+    const responseData = await response.json();
     expect(response.status).toBe(201);
-    expect(data.name).toBe('Aceite sintético 10W30');
+    expect(responseData.data.name).toBe('Aceite sintético 10W30');
   });
 });
