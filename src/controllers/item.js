@@ -7,7 +7,7 @@ const response = require('../utils/response');
 const getItems = async (req, res) => {
   try {
     const items = await Item.find({ 
-      userId: req.user._id 
+      userId: req.user.id
     }).populate('category', 'name').populate('brand', 'name').populate('location', 'name');
     if (!items) return res.status(404).json(response.error(404, res.translate('Items not found')));
     res.status(200).json(response.success(200, res.translate('Items information obtained successfully'), items));
@@ -19,8 +19,8 @@ const getItems = async (req, res) => {
 const getItem = async (req, res) => {
   try {
     const item = await Item.findOne({
-      id: req.params.id,
-      userId: req.user._id
+      _id: req.params.id,
+      userId: req.user.id
   }).populate('category', 'name').populate('brand', 'name').populate('location', 'name');
     if (!item) return res.status(404).json(response.error(404, res.translate('Item not found')));
     res.status(200).json(response.success(200, res.translate('Item information obtained successfully'), item));
@@ -32,7 +32,7 @@ const getItem = async (req, res) => {
 const createItem = async (req, res) => {
   const item = new Item({
     ...req.body,
-    userId: req.user._id,
+    userId: req.user.id,
   });
   const { category, brand, location } = req.body;
   
@@ -69,8 +69,8 @@ const createItem = async (req, res) => {
 const updateItem = async (req, res) => {
   try {
     const item = await Item.findByIdAndUpdate({
-      id: req.params.id,
-      userId: req.user._id
+      _id: req.params.id,
+      userId: req.user.id
     }, req.body, { new: true });
     res.status(200).json(response.success(200, res.translate('Item updated'), item));
   }
@@ -82,8 +82,8 @@ const updateItem = async (req, res) => {
 const deleteItem = async (req, res) => {
   try {
     const item = await Item.findByIdAndDelete({
-      id: req.params.id,
-      userId: req.user._id
+      _id: req.params.id,
+      userId: req.user.id
     });
     res.status(200).json(response.success(200, res.translate('Item deleted'), item));
   } catch (error) {

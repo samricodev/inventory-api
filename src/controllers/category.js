@@ -3,7 +3,7 @@ const response = require('../utils/response');
 
 const getCategories = async (req, res) => {
   try {
-    const categories = await Category.find({ userId: req.user._id }).populate('items');
+    const categories = await Category.find({ userId: req.user.id }).populate('items');
     if (!categories.length) {
       return res.status(404).json(response.error(404, res.translate('No categories found')));
     }
@@ -17,7 +17,7 @@ const getCategory = async (req, res) => {
   try {
     const category = await Category.findOne({
       _id: req.params.id,
-      userId: req.user._id
+      userId: req.user.id
     }).populate('items');
 
     if (!category) return res.status(404).json(response.error(404, res.translate('Category not found')));
@@ -33,7 +33,7 @@ const createCategory = async (req, res) => {
       name: req.body.name,
       description: req.body.description,
       items: req.body.items,
-      userId: req.user._id,
+      userId: req.user.id,
     });
 
     const newCategory = await category.save();
@@ -47,7 +47,7 @@ const updateCategory = async (req, res) => {
   try {
     const category = await Category.findOne({
       _id: req.params.id,
-      userId: req.user._id
+      userId: req.user.id
     });
 
     if (!category) return res.status(404).json(response.error(404, res.translate('Category not found')));
@@ -66,7 +66,7 @@ const deleteCategory = async (req, res) => {
   try {
     const category = await Category.findOneAndDelete({
       _id: req.params.id,
-      userId: req.user._id
+      userId: req.user.id
     });
 
     if (!category) return res.status(404).json(response.error(404, res.translate('Category not found')));
