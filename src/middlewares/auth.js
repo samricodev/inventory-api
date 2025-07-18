@@ -5,7 +5,7 @@ function authenticate(req, res, next) {
   const authHeader = req.headers.authorization;
 
   if (!authHeader || !authHeader.startsWith('Bearer '))
-    return next(response.error(401, 'Token requerido'));
+    return next(response.error(401, 'Token required'));
 
   const token = authHeader.split(' ')[1];
 
@@ -15,7 +15,7 @@ function authenticate(req, res, next) {
     next();
   } catch (error) {
     console.error('JWT Error:', error);
-    return next(response.error(403, 'Token inválido o expirado'));
+    return next(response.error(403, 'Token required or expires'));
   }
 };
 
