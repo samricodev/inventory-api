@@ -32,10 +32,6 @@ const createLocation = async (req, res) => {
       ...req.body,
       userId: req.user.id,
     });
-    console.log('Creating location with:', {
-      body: req.body,
-      userId: req.user.id,
-    });
 
     await location.save();
     res.status(201).json(response.success(201, res.translate('Location registered'), location));
