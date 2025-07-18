@@ -3,7 +3,7 @@ const response = require('../utils/response');
 
 const getBrands = async (req, res) => {
   try {
-    const brands = await Brand.find({ userId: req.user._id }).populate('items');
+    const brands = await Brand.find({ userId: req.user.id }).populate('items');
     if (!brands.length) {
       return res.status(404).json(response.error(404, res.translate('No brands found')));
     }
@@ -17,7 +17,7 @@ const getBrand = async (req, res) => {
   try {
     const brand = await Brand.findOne({
       _id: req.params.id,
-      userId: req.user._id
+      userId: req.user.id
     }).populate('items');
     if (!brand) return res.status(404).json(response.error(404, res.translate('Brand not found')));
     res.status(200).json(response.success(200, res.translate('Brand information obtained successfully'), brand));
@@ -30,7 +30,7 @@ const createBrand = async (req, res) => {
   try {
     const brand = new Brand({
       ...req.body,
-      userId: req.user._id,
+      userId: req.user.id,
     });
     await brand.save();
     res.status(201).json(response.success(201, res.translate('Brand registered'), brand));
@@ -41,8 +41,10 @@ const createBrand = async (req, res) => {
 
 const updateBrand = async (req, res) => {
   try {
-    const brand = await Brand.findOneAndUpdate(
-      { _id: req.params.id, userId: req.user._id },
+    const brand = await Brand.findOneAndUpdate({ 
+      _id: req.params.id, 
+      userId: req.user.id 
+    },
       req.body,
       { new: true }
     );
@@ -57,7 +59,7 @@ const deleteBrand = async (req, res) => {
   try {
     const brand = await Brand.findOneAndDelete({
       _id: req.params.id,
-      userId: req.user._id
+      userId: req.user.id
     });
     if (!brand) return res.status(404).json(response.error(404, res.translate('Brand not found')));
     res.json(response.success(200, res.translate('Brand deleted'), brand));

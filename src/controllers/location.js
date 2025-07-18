@@ -4,7 +4,7 @@ const response = require('../utils/response');
 const getLocations = async (req, res) => {
   try {
     const locations = await Location.find({
-      userId: req.user._id
+      userId: req.user.id
     }).populate('items');
     if (!locations) return res.status(404).json(response.error(404, res.translate('No locations found')));
     res.status(200).json(response.success(200, res.translate('Locations information obtained successfully'), locations));
@@ -16,8 +16,8 @@ const getLocations = async (req, res) => {
 const getLocation = async (req, res) => {
   try {
     const location = await Location.findById({
-      id: req.params.id,
-      userId: req.user._id
+      _id: req.params.id,
+      userId: req.user.id
     }).populate('items');
     if (!location) return res.status(404).json(response.error(404, res.translate('Location not found')));
     res.status(200).json(response.success(200, res.translate('Location information obtained successfully'), location));
@@ -30,8 +30,9 @@ const createLocation = async (req, res) => {
   try {
     const location = new Location({
       ...req.body,
-      userId: req.user._id,
+      userId: req.user.id,
     });
+
     await location.save();
     res.status(201).json(response.success(201, res.translate('Location registered'), location));
   } catch (error) {
@@ -42,8 +43,8 @@ const createLocation = async (req, res) => {
 const updateLocation = async (req, res) => {
   try {
     const location = await Location.findByIdAndDelete({
-      id: req.params.id,
-      userId: req.user._id
+      _id: req.params.id,
+      userId: req.user.id
     });
     if (!location) return res.status(404).json(response.error(404, res.translate('Location not found')));
     res.status(200).json(response.success(200, res.translate('Location updated'), location));
@@ -55,8 +56,8 @@ const updateLocation = async (req, res) => {
 const deleteLocation = async (req, res) => {
   try {
     const location = await Location.findByIdAndDelete({
-      id: req.params.id,
-      userId: req.user._id
+      _id: req.params.id,
+      userId: req.user.id
     });
     if (!location) return res.status(404).json(response.error(404, res.translate('Location not found')));
     res.status(200).json(response.success(200, res.translate('Location deleted'), location));
