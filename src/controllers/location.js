@@ -45,7 +45,7 @@ const updateLocation = async (req, res) => {
     const location = await Location.findByIdAndUpdate({
       _id: req.params.id,
       userId: req.user.id
-    });
+    }, req.body, { new: true });
     if (!location) return res.status(404).json(response.error(404, res.translate('Location not found')));
     res.status(200).json(response.success(200, res.translate('Location updated'), location));
   } catch (error) {
