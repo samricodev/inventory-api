@@ -1,12 +1,19 @@
 const Brand = require('../models/brand');
 const response = require('../utils/response');
+const redisClient = require('../config/redisClient');
 
 const getBrands = async (req, res) => {
   try {
+    const cacheKey = `brands:${req.user.id}`;
+    const cached = await redisClient.get(cacheKey);
+    if (cached) {
+      return res.status(200).json(response.success(200, res.translate('Brands from cache'), JSON.parse(cached)));
+    }
     const brands = await Brand.find({ userId: req.user.id }).populate('items');
     if (!brands.length) {
       return res.status(404).json(response.error(404, res.translate('No brands found')));
     }
+    await redisClient.setEx(cacheKey, 3600, JSON.stringify(brands)); // cache por 1 hora
     res.status(200).json(response.success(200, res.translate('Brands information obtained successfully'), brands));
   } catch (error) {
     res.status(500).json(response.error(500, error.message));
@@ -15,14 +22,22 @@ const getBrands = async (req, res) => {
 
 const getBrand = async (req, res) => {
   try {
+    const cacheKey = `brand:${req.params.id}`;
+    const cached = await redisClient.get(cacheKey);
+    if (cached) {
+      return res.status(200).json(response.success(200, res.translate('Brand from cache'), JSON.parse(cached)));
+    }
     const brand = await Brand.findOne({
       _id: req.params.id,
       userId: req.user.id
     }).populate('items');
-    if (!brand) return res.status(404).json(response.error(404, res.translate('Brand not found')));
+    if (!brand) {
+      return res.status(404).json(response.error(404, res.translate('Brand not found')));
+    }
+    await redisClient.setEx(cacheKey, 3600, JSON.stringify(brand));
     res.status(200).json(response.success(200, res.translate('Brand information obtained successfully'), brand));
   } catch (error) {
-    res.status(500).json(response.error(500,error.message));
+    res.status(500).json(response.error(500, error.message));
   }
 };
 
@@ -33,6 +48,7 @@ const createBrand = async (req, res) => {
       userId: req.user.id,
     });
     await brand.save();
+    await redisClient.del(`brands:${req.user.id}`);
     res.status(201).json(response.success(201, res.translate('Brand registered'), brand));
   } catch (error) {
     res.status(500).json(response.error(500, error.message));
@@ -44,11 +60,12 @@ const updateBrand = async (req, res) => {
     const brand = await Brand.findOneAndUpdate({ 
       _id: req.params.id, 
       userId: req.user.id 
-    },
-      req.body,
-      { new: true }
-    );
-    if (!brand) return res.status(404).json(response.error(404, res.translate('Brand not found')));
+    }, req.body, { new: true });
+    if (!brand) {
+      return res.status(404).json(response.error(404, res.translate('Brand not found')));
+    }
+    await redisClient.del(`brands:${req.user.id}`);
+    await redisClient.del(`brand:${req.params.id}`);
     res.status(200).json(response.success(200, res.translate('Brand updated'), brand));
   } catch (error) {
     res.status(500).json(response.error(500, error.message));
@@ -61,8 +78,12 @@ const deleteBrand = async (req, res) => {
       _id: req.params.id,
       userId: req.user.id
     });
-    if (!brand) return res.status(404).json(response.error(404, res.translate('Brand not found')));
-    res.json(response.success(200, res.translate('Brand deleted'), brand));
+    if (!brand) {
+      return res.status(404).json(response.error(404, res.translate('Brand not found')));
+    }
+    await redisClient.del(`brands:${req.user.id}`);
+    await redisClient.del(`brand:${req.params.id}`);
+    res.status(200).json(response.success(200, res.translate('Brand deleted'), brand));
   } catch (error) {
     res.status(500).json(response.error(500, error.message));
   }
