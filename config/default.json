@@ -3,6 +3,7 @@
     "port": 3080,
     "host": "localhost"
   },
+  "redisUrl": "redis://inventory-cache:6379",
   "mongodb": {
     "url": "${MONGODB_URI}",
     "options": {
