@@ -1,9 +1,9 @@
 require('dotenv').config();
-const express = require('express');
+const cors = require('cors');
 const morgan = require('morgan');
 const helmet = require('helmet');
-const cors = require('cors');
 const config = require('config');
+const express = require('express');
 const i18n = require('./config/i18n');
 
 const connection = require('./db/connection');
