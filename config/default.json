@@ -5,7 +5,7 @@
   },
   "redisUrl": "redis://inventory-cache:6379",
   "mongodb": {
-    "url": "mongodb://inventory-db:27017/inventory",
+    "url": "${MONGODB_URI}",
     "options": {
       "useNewUrlParser": true,
       "useUnifiedTopology": true,
@@ -15,7 +15,7 @@
   },
   "cors": {
     "enabled": true,
-    "origin": "*",
+    "origin": "https://inventory-dashboard-rho.vercel.app",
     "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
     "preflightContinue": false,
     "optionsSuccessStatus": 204
