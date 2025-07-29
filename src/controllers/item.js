@@ -16,7 +16,7 @@ const getItems = async (req, res) => {
       userId: req.user.id
     }).populate('category', 'name').populate('brand', 'name').populate('location', 'name');
     if (!items) return res.status(404).json(response.error(404, res.translate('Items not found')));
-    await redisClient.setEx(cacheKey, 3600, JSON.stringify(items)); // 1 hora
+    await redisClient.setEx(cacheKey, 3600, JSON.stringify(items));
     res.status(200).json(response.success(200, res.translate('Items information obtained successfully'), items));
   } catch (error) {
     res.status(500).json(response.error(500, error.message));

@@ -3,8 +3,8 @@ const response = require('../utils/response');
 const redisClient = require('../config/redisClient');
 
 const getLocations = async (req, res) => {
-  const cacheKey = `locations:${req.user.id}`;
   try {
+    const cacheKey = `locations:${req.user.id}`;
     const cached = await redisClient.get(cacheKey);
     if (cached) {
       const data = JSON.parse(cached);
@@ -20,8 +20,8 @@ const getLocations = async (req, res) => {
 };
 
 const getLocation = async (req, res) => {
-  const cacheKey = `location:${req.params.id}:${req.user.id}`;
   try {
+    const cacheKey = `location:${req.params.id}:${req.user.id}`;
     const cached = await redisClient.get(cacheKey);
     if (cached) {
       const data = JSON.parse(cached);

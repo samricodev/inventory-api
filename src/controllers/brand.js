@@ -13,7 +13,7 @@ const getBrands = async (req, res) => {
     if (!brands.length) {
       return res.status(404).json(response.error(404, res.translate('No brands found')));
     }
-    await redisClient.setEx(cacheKey, 3600, JSON.stringify(brands)); // cache por 1 hora
+    await redisClient.setEx(cacheKey, 3600, JSON.stringify(brands));
     res.status(200).json(response.success(200, res.translate('Brands information obtained successfully'), brands));
   } catch (error) {
     res.status(500).json(response.error(500, error.message));
