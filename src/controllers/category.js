@@ -13,7 +13,7 @@ const getCategories = async (req, res) => {
     if (!categories.length) {
       return res.status(404).json(response.error(404, res.translate('No categories found')));
     }
-    await redisClient.setEx(cacheKey, 3600, JSON.stringify(categories)); // Cache por 1 hora
+    await redisClient.setEx(cacheKey, 3600, JSON.stringify(categories));
     res.status(200).json(response.success(200, res.translate('Categories information obtained successfully'), categories));
   } catch (error) {
     res.status(500).json(response.error(500, error.message));
