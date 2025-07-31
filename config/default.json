@@ -15,7 +15,10 @@
   },
   "cors": {
     "enabled": true,
-    "origin": "https://inventory-dashboard-rho.vercel.app",
+    "origin": [
+      "https://www.inventoryapp.dev",
+      "https://inventory-dashboard-rho.vercel.app"
+    ],
     "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
     "preflightContinue": false,
     "optionsSuccessStatus": 204
