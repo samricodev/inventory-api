@@ -4,17 +4,32 @@ const redisClient = require('../config/redisClient');
 
 const getBrands = async (req, res) => {
   try {
-    const cacheKey = `brands:${req.user.id}`;
-    const cached = await redisClient.get(cacheKey);
-    if (cached) {
-      return res.status(200).json(response.success(200, res.translate('Brands from cache'), JSON.parse(cached)));
+    const { page = 1, limit = 10 } = req.query;
+    const skip = (page - 1) * limit;
+    const parsedLimit = parseInt(limit);
+    const parsedPage = parseInt(page);
+
+    const cacheKey = `brands:${req.user.id}:page:${parsedPage}:limit:${parsedLimit}`;
+    const cachedBrands = await redisClient.get(cacheKey);
+
+    if (cachedBrands) {
+      return res.status(200).json(response.success(200, res.translate('Brands from cache'), JSON.parse(cachedBrands)));
     }
-    const brands = await Brand.find({ userId: req.user.id }).populate('items');
-    if (!brands.length) {
-      return res.status(404).json(response.error(404, res.translate('No brands found')));
-    }
-    await redisClient.setEx(cacheKey, 3600, JSON.stringify(brands));
-    res.status(200).json(response.success(200, res.translate('Brands information obtained successfully'), brands));
+
+    const [ brands, total ] = await Promise.all([
+      Brand.find({ userId: req.user.id }).populate('items').skip(skip).limit(parsedLimit),
+      Brand.countDocuments({ userId: req.user.id }),
+    ]); 
+
+    const result = {
+      brands,
+      page: parsedPage,
+      totalPages: Math.ceil(total / parsedLimit),
+      totalBrands: total,
+    };
+
+    await redisClient.setEx(cacheKey, 3600, JSON.stringify(result));
+    res.status(200).json(response.success(200, res.translate('Brands information obtained successfully'), result));
   } catch (error) {
     res.status(500).json(response.error(500, error.message));
   }

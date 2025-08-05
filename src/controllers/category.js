@@ -4,17 +4,32 @@ const redisClient = require('../config/redisClient');
 
 const getCategories = async (req, res) => {
   try {
-    const cacheKey = `categories:${req.user.id}`;
-    const cached = await redisClient.get(cacheKey);
-    if (cached) {
-      return res.status(200).json(response.success(200, res.translate('Categories from cache'), JSON.parse(cached)));
+    const { page = 1, limit = 10 } = req.query;
+    const skip = (page - 1) * limit;
+    const parsedLimit = parseInt(limit);
+    const parsedPage = parseInt(page);
+
+    const cacheKey = `categories:${req.user.id}:page:${parsedPage}:limit:${parsedLimit}`;
+    const cachedCategories = await redisClient.get(cacheKey);
+
+    if (cachedCategories) {
+      return res.status(200).json(response.success(200, res.translate('Categories from cache'), JSON.parse(cachedCategories)));
     }
-    const categories = await Category.find({ userId: req.user.id }).populate('items');
-    if (!categories.length) {
-      return res.status(404).json(response.error(404, res.translate('No categories found')));
-    }
-    await redisClient.setEx(cacheKey, 3600, JSON.stringify(categories));
-    res.status(200).json(response.success(200, res.translate('Categories information obtained successfully'), categories));
+    
+    const [ categories, total ] = await Promise.all([
+      Category.find({ userId: req.user.id }).populate('items').skip(skip).limit(parsedLimit),
+      Category.countDocuments({ userId: req.user.id }),
+    ]);
+
+    const result = {
+      categories,
+      page: parsedPage,
+      totalPages: Math.ceil(total / parsedLimit),
+      totalCategories: total,
+    };
+
+    await redisClient.setEx(cacheKey, 3600, JSON.stringify(result));
+    res.status(200).json(response.success(200, res.translate('Categories information obtained successfully'), result));
   } catch (error) {
     res.status(500).json(response.error(500, error.message));
   }

@@ -14,6 +14,7 @@ const getItems = async (req, res) => {
 
     const cacheKey = `items:${req.user.id}:page:${parsedPage}:limit:${parsedLimit}`;
     const cachedItems = await redisClient.get(cacheKey);
+    
     if (cachedItems) {
       return res.status(200).json(response.success(200, res.translate('Items from cache'), JSON.parse(cachedItems)));
     }
