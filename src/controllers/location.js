@@ -4,16 +4,33 @@ const redisClient = require('../config/redisClient');
 
 const getLocations = async (req, res) => {
   try {
-    const cacheKey = `locations:${req.user.id}`;
-    const cached = await redisClient.get(cacheKey);
-    if (cached) {
-      const data = JSON.parse(cached);
-      return res.status(200).json(response.success(200, res.translate('Locations information obtained successfully (cached)'), data));
+    const { page = 1, limit = 10 } = req.query;
+    const skip = (page - 1) * limit;
+    const parsedLimit = parseInt(limit);
+    const parsedPage = parseInt(page);
+
+    const cacheKey = `locations:${req.user.id}:page:${parsedPage}:limit:${parsedLimit}`;
+    const cachedLocations = await redisClient.get(cacheKey);
+
+    if (cachedLocations) {
+      const data = JSON.parse(cachedLocations);
+      return res.status(200).json(response.success(200, res.translate('Locations information obtained successfully'), data));
     }
-    const locations = await Location.find({ userId: req.user.id }).populate('items');
-    if (!locations) return res.status(404).json(response.error(404, res.translate('No locations found')));
-    await redisClient.set(cacheKey, JSON.stringify(locations), { EX: 60 });
-    res.status(200).json(response.success(200, res.translate('Locations information obtained successfully'), locations));
+
+    const [ locations, total ] = await Promise.all([
+      Location.find({ userId: req.user.id }).populate('items').skip(skip).limit(parsedLimit),
+      Location.countDocuments({ userId: req.user.id }),
+    ]);
+
+    const result = {
+      locations,
+      page: parsedPage,
+      totalPages: Math.ceil(total / parsedLimit),
+      totalLocations: total,
+    };
+
+    await redisClient.set(cacheKey, JSON.stringify(result), { EX: 60 });
+    res.status(200).json(response.success(200, res.translate('Locations information obtained successfully'), result));
   } catch (error) {
     res.status(500).json(response.error(500, error.message));
   }
