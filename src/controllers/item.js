@@ -21,7 +21,7 @@ const getItems = async (req, res) => {
 
     const [items, total] = await Promise.all([
       Item.find({ userId: req.user.id })
-        .sort({ name: 1 })
+        .sort({ 'name': 1 })
         .populate('category', 'name')
         .populate('brand', 'name')
         .populate('location', 'name')
