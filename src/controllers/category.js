@@ -17,7 +17,11 @@ const getCategories = async (req, res) => {
     }
     
     const [ categories, total ] = await Promise.all([
-      Category.find({ userId: req.user.id }).populate('items').skip(skip).limit(parsedLimit),
+      Category.find({ userId: req.user.id })
+        .sort({ 'name': 1 })
+        .populate('items')
+        .skip(skip)
+        .limit(parsedLimit),
       Category.countDocuments({ userId: req.user.id }),
     ]);
 

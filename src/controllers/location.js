@@ -18,7 +18,11 @@ const getLocations = async (req, res) => {
     }
 
     const [ locations, total ] = await Promise.all([
-      Location.find({ userId: req.user.id }).populate('items').skip(skip).limit(parsedLimit),
+      Location.find({ userId: req.user.id })
+        .sort({ 'name': 1 })
+        .populate('items')
+        .skip(skip)
+        .limit(parsedLimit),
       Location.countDocuments({ userId: req.user.id }),
     ]);
 
