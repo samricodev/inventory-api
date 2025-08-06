@@ -17,7 +17,11 @@ const getBrands = async (req, res) => {
     }
 
     const [ brands, total ] = await Promise.all([
-      Brand.find({ userId: req.user.id }).populate('items').skip(skip).limit(parsedLimit),
+      Brand.find({ userId: req.user.id })
+        .sort({ 'name': 1})
+        .populate('items')
+        .skip(skip)
+        .limit(parsedLimit),
       Brand.countDocuments({ userId: req.user.id }),
     ]); 
 
