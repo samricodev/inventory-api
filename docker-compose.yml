@@ -10,4 +10,4 @@ services:
       - inventory
 networks:
   inventory:
-    driver: bridge
+    external: true
