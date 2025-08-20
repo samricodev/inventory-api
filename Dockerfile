@@ -1,7 +1,7 @@
 FROM node:alpine3.20
 
-RUN mkdir -p /app
-WORKDIR /app
+RUN mkdir -p /inventory-api
+WORKDIR /inventory-api
 
 COPY package*.json ./
 RUN npm install
@@ -10,4 +10,4 @@ COPY ./src/index.js .
 
 EXPOSE 3001
 
-CMD [ "npm", "run", "start" ]
+CMD [ "npm", "run", "start.dev" ]
