@@ -5,7 +5,7 @@ describe('Register Location, Brand, Category and Item', () => {
   let idCategory;
 
   it('should register a new location', async () => {
-    const response = await fetch('http://localhost:3080/locations', {
+    const response = await fetch('http://localhost:3001/locations', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -25,7 +25,7 @@ describe('Register Location, Brand, Category and Item', () => {
   });
 
   it('should register a new brand', async () => {
-    const response = await fetch('http://localhost:3080/brands', {
+    const response = await fetch('http://localhost:3001/brands', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -43,7 +43,7 @@ describe('Register Location, Brand, Category and Item', () => {
   });
 
   it('should register a new category', async () => {
-    const response = await fetch('http://localhost:3080/categories', {
+    const response = await fetch('http://localhost:3001/categories', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -60,7 +60,7 @@ describe('Register Location, Brand, Category and Item', () => {
   });
 
   it('should register a new item in the category', async () => {
-    const response = await fetch('http://localhost:3080/items', {
+    const response = await fetch('http://localhost:3001/items', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
