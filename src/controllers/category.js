@@ -9,12 +9,12 @@ const getCategories = async (req, res) => {
     const parsedLimit = parseInt(limit);
     const parsedPage = parseInt(page);
 
-    const cacheKey = `categories:${req.user.id}:page:${parsedPage}:limit:${parsedLimit}`;
+    /* const cacheKey = `categories:${req.user.id}:page:${parsedPage}:limit:${parsedLimit}`;
     const cachedCategories = await redisClient.get(cacheKey);
 
     if (cachedCategories) {
       return res.status(200).json(response.success(200, res.translate('Categories from cache'), JSON.parse(cachedCategories)));
-    }
+    } */
     
     const [ categories, total ] = await Promise.all([
       Category.find({ userId: req.user.id })
@@ -32,7 +32,7 @@ const getCategories = async (req, res) => {
       totalCategories: total,
     };
 
-    await redisClient.setEx(cacheKey, 3600, JSON.stringify(result));
+    // await redisClient.setEx(cacheKey, 3600, JSON.stringify(result));
     res.status(200).json(response.success(200, res.translate('Categories information obtained successfully'), result));
   } catch (error) {
     res.status(500).json(response.error(500, error.message));

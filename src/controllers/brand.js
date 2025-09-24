@@ -9,12 +9,12 @@ const getBrands = async (req, res) => {
     const parsedLimit = parseInt(limit);
     const parsedPage = parseInt(page);
 
-    const cacheKey = `brands:${req.user.id}:page:${parsedPage}:limit:${parsedLimit}`;
+    /* const cacheKey = `brands:${req.user.id}:page:${parsedPage}:limit:${parsedLimit}`;
     const cachedBrands = await redisClient.get(cacheKey);
 
     if (cachedBrands) {
       return res.status(200).json(response.success(200, res.translate('Brands from cache'), JSON.parse(cachedBrands)));
-    }
+    } */
 
     const [ brands, total ] = await Promise.all([
       Brand.find({ userId: req.user.id })
@@ -32,7 +32,7 @@ const getBrands = async (req, res) => {
       totalBrands: total,
     };
 
-    await redisClient.setEx(cacheKey, 3600, JSON.stringify(result));
+    // await redisClient.setEx(cacheKey, 3600, JSON.stringify(result));
     res.status(200).json(response.success(200, res.translate('Brands information obtained successfully'), result));
   } catch (error) {
     res.status(500).json(response.error(500, error.message));

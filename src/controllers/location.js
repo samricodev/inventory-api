@@ -9,13 +9,13 @@ const getLocations = async (req, res) => {
     const parsedLimit = parseInt(limit);
     const parsedPage = parseInt(page);
 
-    const cacheKey = `locations:${req.user.id}:page:${parsedPage}:limit:${parsedLimit}`;
+    /* const cacheKey = `locations:${req.user.id}:page:${parsedPage}:limit:${parsedLimit}`;
     const cachedLocations = await redisClient.get(cacheKey);
 
     if (cachedLocations) {
       const data = JSON.parse(cachedLocations);
       return res.status(200).json(response.success(200, res.translate('Locations information obtained successfully'), data));
-    }
+    } */
 
     const [ locations, total ] = await Promise.all([
       Location.find({ userId: req.user.id })
@@ -33,7 +33,7 @@ const getLocations = async (req, res) => {
       totalLocations: total,
     };
 
-    await redisClient.set(cacheKey, JSON.stringify(result), { EX: 60 });
+    // await redisClient.set(cacheKey, JSON.stringify(result), { EX: 60 });
     res.status(200).json(response.success(200, res.translate('Locations information obtained successfully'), result));
   } catch (error) {
     res.status(500).json(response.error(500, error.message));
